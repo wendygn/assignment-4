@@ -1,0 +1,37 @@
+import { DockerSandboxClient } from "@anvia/sandbox";
+import { createDockerSandboxTools } from "@anvia/sandbox";
+
+const client = new DockerSandboxClient();
+await client.pullImage({ image: "ghcr.io/astral-sh/uv:alpine" });
+
+export const sandbox = await client.createSandbox({
+  image: "ghcr.io/astral-sh/uv:alpine",
+  workspace: { type: "ephemeral" },
+  network: { mode: "bridge", ports: [8000] },
+  resources: {
+    memoryMb: 512,
+    cpus: 1,
+    pidsLimit: 128,
+  },
+  runtime: {
+    commandTimeoutMs: 30_000,
+    maxOutputBytes: 64_000,
+  },
+});
+
+export const tools = createDockerSandboxTools({
+  sandbox: sandbox.runtime,
+  tools: [
+    "read_file",
+    "write_file",
+    "list_files",
+    "exec_command",
+    "list_ports",
+    "start_process",
+    "wait_for_port",
+    "list_processes",
+    "read_process_logs",
+    
+    
+  ],
+});
