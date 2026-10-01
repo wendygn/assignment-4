@@ -1,6 +1,5 @@
 import { Agent } from "@anvia/core";
 import { getModel } from "./model.js";
-import { supportPolicy } from "./context.js";
 import { lens } from "./observer.js";
 import { tools } from "./sandbox.js";
 import { BASE_INSTRUCTION } from "./instruction.js";
